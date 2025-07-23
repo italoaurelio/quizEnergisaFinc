@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "question": "Qual é a principal fonte de energia renovável no Brasil?",
+    "options": [
+      "Energia Solar",
+      "Energia Eólica", 
+      "Energia Hidrelétrica",
+      "Biomassa"
+    ],
+    "correctAnswer": 2,
+    "points": 10
+  },
+  {
+    "id": 2,
+    "question": "Qual aparelho doméstico consome mais energia elétrica?",
+    "options": [
+      "Geladeira",
+      "Chuveiro Elétrico",
+      "Ar Condicionado",
+      "Televisão"
+    ],
+    "correctAnswer": 1,
+    "points": 10
+  },
+  {
+    "id": 3,
+    "question": "O que significa eficiência energética?",
+    "options": [
+      "Usar mais energia",
+      "Usar a mesma energia com melhor resultado",
+      "Desligar todos os aparelhos",
+      "Usar apenas energia solar"
+    ],
+    "correctAnswer": 1,
+    "points": 10
+  }
+]
