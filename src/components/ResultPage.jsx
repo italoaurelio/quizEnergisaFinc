@@ -1,36 +1,36 @@
 import { motion } from 'framer-motion'
-import { FaTrophy, FaMedal, FaRedo, FaLeaf, FaStar, FaFire, FaHeart, FaThumbsUp } from 'react-icons/fa'
+import { FaTrophy, FaMedal, FaRedo, FaLeaf, FaStar } from 'react-icons/fa'
 
 function ResultPage({ score, totalScore, totalQuestions, onRestart }) {
   const percentage = Math.round((score / totalScore) * 100)
   
   const getPerformanceLevel = () => {
-    if (percentage >= 90) return { 
-      level: '🏆 EXPERT VERDE', 
+    if (percentage === 100) return { 
+      level: '🏆 PONTUAÇÃO MÁXIMA!', 
       icon: FaTrophy, 
       gradient: 'var(--gradient-primary)', 
-      message: 'Você é um verdadeiro guardião da energia! 🌟',
+      message: 'Parabéns... Pontuação máxima! Seu conhecimento pode mudar o mundo.',
       emoji: '🎖️'
     }
-    if (percentage >= 70) return { 
-      level: '🥇 ECO CAMPEÃO', 
+    if (percentage >= 80) return { 
+      level: '🥇 MUITO BOM!', 
       icon: FaMedal, 
       gradient: 'var(--gradient-secondary)', 
-      message: 'Excelente! Você entende muito de sustentabilidade! 🌱',
+      message: 'Show! Faltou pouco, mas seu desempenho foi muito bom.',
       emoji: '⭐'
     }
-    if (percentage >= 50) return { 
-      level: '🌿 CONSCIENTE', 
+    if (percentage >= 60) return { 
+      level: '🌿 BEM INFORMADO', 
       icon: FaStar, 
       gradient: 'var(--gradient-accent)', 
-      message: 'Bom trabalho! Continue aprendendo sobre energia! 💡',
+      message: 'Muito bom! Você está bem-informado.',
       emoji: '👍'
     }
     return { 
-      level: '🌱 APRENDIZ', 
+      level: '🌱 PODE MELHORAR', 
       icon: FaLeaf, 
       gradient: 'var(--gradient-error)', 
-      message: 'Continue estudando! Cada passo conta! 📚',
+      message: 'Valeu! Você se empenhou, mas pode melhorar.',
       emoji: '💪'
     }
   }
@@ -55,267 +55,197 @@ function ResultPage({ score, totalScore, totalQuestions, onRestart }) {
     animate: { y: 0, opacity: 1 }
   }
 
-  const scoreVariants = {
-    initial: { scale: 0, rotate: -180 },
-    animate: { 
-      scale: 1, 
-      rotate: 0,
-      transition: {
-        type: "spring",
-        stiffness: 200,
-        damping: 12,
-        delay: 0.5
-      }
-    }
-  }
-
-  const iconVariants = {
-    initial: { scale: 0, y: -50 },
-    animate: { 
-      scale: 1,
-      y: 0,
-      transition: {
-        delay: 0.8,
-        type: "spring",
-        stiffness: 300,
-        damping: 15
-      }
-    },
-    hover: { 
-      scale: 1.3,
-      rotate: [0, -10, 10, 0],
-      transition: { duration: 0.5 }
-    }
-  }
-
-  const floatingVariants = {
-    animate: {
-      y: [-3, 3, -3],
-      rotate: [-2, 2, -2],
-      transition: {
-        duration: 4,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }
-    }
-  }
-
   return (
-    <>
-      <motion.div 
-        className="quiz-card wide"
-        variants={containerVariants}
-        initial="initial"
-        animate="animate"
-        whileHover={{ y: -3 }}
-      >
-        {/* Layout responsivo - Grid no desktop, coluna no mobile */}
+    <motion.div 
+      className="main-card"
+      variants={containerVariants}
+      initial="initial"
+      animate="animate"
+    >
+      <div className="result-layout">
         <div className="result-content">
-          <div className="result-left">
-            <motion.div 
-              variants={iconVariants}
-              whileHover="hover"
-              style={{ 
-                display: 'flex', 
-                justifyContent: 'center', 
-                marginBottom: '0.8rem' 
-              }}
-            >
-              <motion.div variants={floatingVariants} animate="animate">
-                <Icon size={50} style={{ 
-                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2))',
-                  color: percentage >= 70 ? 'var(--primary-green)' : 
-                         percentage >= 50 ? 'var(--accent-orange)' : 'var(--error-red)'
-                }} />
+          {/* Coluna Esquerda - Performance e Score */}
+          <motion.div className="result-left" variants={itemVariants}>
+            <div className="performance-section">
+              <motion.div
+                className="performance-icon"
+                variants={itemVariants}
+                style={{
+                  background: performance.gradient,
+                  borderRadius: '50%',
+                  width: '80px',
+                  height: '80px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 1rem',
+                  boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)'
+                }}
+              >
+                <Icon size={40} color="white" />
               </motion.div>
-            </motion.div>
 
-            <motion.h1 
-              variants={itemVariants} 
-              style={{ 
-                background: performance.gradient,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                marginBottom: '1rem',
-                textAlign: 'center',
-                fontSize: '1.8rem'
-              }}
-            >
-              {performance.level}
-            </motion.h1>
+              <motion.h1
+                variants={itemVariants}
+                className="performance-title"
+                style={{
+                  fontSize: '1.6rem',
+                  marginBottom: '0.8rem',
+                  background: performance.gradient,
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  textAlign: 'center'
+                }}
+              >
+                {performance.level}
+              </motion.h1>
 
-            <motion.div 
-              variants={scoreVariants}
-              className="score-circle"
-              style={{ 
-                background: performance.gradient,
-                position: 'relative'
-              }}
-            >
-              <span style={{ position: 'relative', zIndex: 2 }}>
+              <motion.div
+                variants={itemVariants}
+                className="score-display"
+                style={{
+                  fontSize: '2.8rem',
+                  fontWeight: 'bold',
+                  marginBottom: '0.8rem',
+                  background: performance.gradient,
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  textAlign: 'center'
+                }}
+              >
                 {percentage}%
-              </span>
-            </motion.div>
+              </motion.div>
 
-            <motion.div variants={itemVariants} className="info-card" style={{ width: '100%', margin: '0.8rem 0' }}>
-              <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(2, 1fr)', 
-                gap: '0.8rem',
-                textAlign: 'center'
-              }}>
-                <div>
-                  <div style={{ 
-                    fontSize: '1.5rem', 
-                    marginBottom: '0.3rem',
-                    background: 'var(--gradient-primary)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                    fontWeight: '900'
-                  }}>
+              <motion.p
+                variants={itemVariants}
+                className="performance-message"
+                style={{
+                  fontSize: '1rem',
+                  color: 'var(--text-dark)',
+                  textAlign: 'center',
+                  lineHeight: '1.5',
+                  marginBottom: '1rem'
+                }}
+              >
+                {performance.message}
+              </motion.p>
+
+              <motion.div
+                className="encouragement"
+                variants={itemVariants}
+                style={{
+                  fontSize: '0.9rem',
+                  color: 'var(--text-light)',
+                  textAlign: 'center',
+                  padding: '0.8rem',
+                  background: 'rgba(0, 230, 118, 0.1)',
+                  borderRadius: '12px',
+                  border: '1px solid rgba(0, 230, 118, 0.2)',
+                  maxWidth: '280px',
+                  margin: '0 auto'
+                }}
+              >
+                <div style={{ marginBottom: '0.4rem', fontSize: '1.2rem' }}>🌱</div>
+                Continue aprendendo sobre eficiência energética e sustentabilidade!
+              </motion.div>
+            </div>
+          </motion.div>
+
+          {/* Coluna Direita - Estatísticas e Ações */}
+          <motion.div className="result-right" variants={itemVariants}>
+            <div className="stats-section">
+              <motion.h2 variants={itemVariants} className="stats-title">
+                📊 Suas Estatísticas
+              </motion.h2>
+
+              <motion.div className="stats-grid" variants={itemVariants}>
+                <div className="stat-card">
+                  <div className="stat-value" style={{ color: 'var(--primary-green)' }}>
                     {score}
                   </div>
-                  <div style={{ color: 'var(--text-light)', fontSize: '0.8rem' }}>
-                    Pontos obtidos
-                  </div>
+                  <div className="stat-label">Pontos Obtidos</div>
                 </div>
-                <div>
-                  <div style={{ 
-                    fontSize: '1.5rem', 
-                    marginBottom: '0.3rem',
-                    background: 'var(--gradient-secondary)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                    fontWeight: '900'
-                  }}>
-                    {Math.floor(score / 10)}
+
+                <div className="stat-card">
+                  <div className="stat-value" style={{ color: 'var(--accent-blue)' }}>
+                    {totalScore}
                   </div>
-                  <div style={{ color: 'var(--text-light)', fontSize: '0.8rem' }}>
-                    Acertos
-                  </div>
+                  <div className="stat-label">Pontos Totais</div>
                 </div>
-              </div>
-            </motion.div>
-          </div>
 
-          <div className="result-right">
-            <motion.div 
-              variants={itemVariants}
-              className="info-card"
-              style={{ 
-                background: `linear-gradient(135deg, ${
-                  percentage >= 70 ? 'rgba(0, 200, 83, 0.15)' : 
-                  percentage >= 50 ? 'rgba(255, 152, 0, 0.15)' : 'rgba(244, 67, 54, 0.15)'
-                }, transparent)`,
-                borderColor: percentage >= 70 ? 'var(--primary-green)' : 
-                            percentage >= 50 ? 'var(--accent-orange)' : 'var(--error-red)'
-              }}
-            >
-              <div style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                gap: '0.6rem',
-                marginBottom: '0.6rem'
-              }}>
-                <span style={{ fontSize: '1.2rem' }}>{performance.emoji}</span>
-                <h3 style={{ margin: 0, color: 'var(--text-dark)', fontSize: '1rem' }}>
-                  Resultado
-                </h3>
-              </div>
-              <p style={{ 
-                margin: 0, 
-                color: 'var(--text-dark)',
-                fontSize: '0.9rem',
-                fontWeight: '600',
-                textAlign: 'center',
-                lineHeight: '1.3'
-              }}>
-                {performance.message}
-              </p>
-            </motion.div>
+                <div className="stat-card">
+                  <div className="stat-value" style={{ color: 'var(--accent-orange)' }}>
+                    {totalQuestions}
+                  </div>
+                  <div className="stat-label">Perguntas</div>
+                </div>
 
-            {/* Dicas baseadas na performance */}
-            <motion.div 
-              variants={itemVariants}
-              className="info-card"
-              style={{ 
-                background: 'rgba(33, 150, 243, 0.1)'
-              }}
-            >
-              <h4 style={{ 
-                margin: '0 0 0.6rem 0', 
-                color: 'var(--accent-blue)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.4rem',
-                fontSize: '0.9rem'
-              }}>
-                <FaHeart style={{ color: 'var(--error-red)' }} />
-                Dica Sustentável
-              </h4>
-              <p style={{ 
-                margin: 0, 
-                color: 'var(--text-dark)',
-                fontSize: '0.85rem',
-                lineHeight: '1.4',
-                textAlign: 'center'
-              }}>
-                {percentage >= 80 
-                  ? "🌟 Seja um multiplicador! Ensine outros sobre eficiência energética!"
-                  : percentage >= 60
-                  ? "💡 Troque lâmpadas por LED e use a luz natural sempre que possível!"
-                  : "🔌 Pequenas mudanças fazem diferença: desligue aparelhos da tomada!"}
-              </p>
-            </motion.div>
+                <div className="stat-card">
+                  <div className="stat-value" style={{ color: 'var(--secondary-green)' }}>
+                    {Math.round((score / totalQuestions) * 10) / 10}
+                  </div>
+                  <div className="stat-label">Média por Pergunta</div>
+                </div>
+              </motion.div>
 
-            <motion.button
-              variants={itemVariants}
-              onClick={onRestart}
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.6rem',
-                background: performance.gradient,
-                fontSize: '1rem',
-                padding: '1rem 1.5rem'
-              }}
-            >
-              <FaRedo size={16} />
-              Jogar Novamente
-            </motion.button>
-
-            <motion.div 
-              variants={itemVariants}
-              style={{ 
-                textAlign: 'center', 
-                marginTop: '0.8rem',
-                fontSize: '0.85rem',
-                color: 'var(--text-dark)',
-                fontWeight: '600'
-              }}
-            >
-              <FaThumbsUp style={{ color: 'var(--primary-green)', marginRight: '0.4rem' }} />
-              Obrigado por cuidar do nosso planeta! 🌍💚
-            </motion.div>
-          </div>
+              <motion.div className="action-section" variants={itemVariants}>
+                <motion.button
+                  className="btn btn-primary restart-btn"
+                  onClick={onRestart}
+                  whileHover={{ 
+                    scale: 1.05,
+                    boxShadow: "0 10px 25px rgba(0, 230, 118, 0.4)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <FaRedo size={18} />
+                  Jogar Novamente
+                </motion.button>
+              </motion.div>
+            </div>
+          </motion.div>
         </div>
-      </motion.div>
-
-      {/* Logo Energisa */}
-      <img 
-        src="/Energisa.png" 
-        alt="Energisa" 
-        className="energisa-logo"
-      />
-    </>
+        
+        {/* Logos no rodapé */}
+        <motion.div 
+          className="result-footer"
+          variants={itemVariants}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '1.5rem',
+            marginTop: '1rem',
+            paddingTop: '0.8rem',
+            borderTop: '1px solid rgba(0, 230, 118, 0.2)',
+            flexShrink: 0
+          }}
+        >
+          <img 
+            src="/AneelLogo.png" 
+            alt="ANEEL Logo" 
+            style={{
+              height: '35px',
+              objectFit: 'contain',
+              opacity: 0.8,
+              filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))'
+            }}
+          />
+          <img 
+            src="/EnergisaLogo.png" 
+            alt="Energisa Logo" 
+            style={{
+              height: '35px',
+              objectFit: 'contain',
+              opacity: 0.8,
+              filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))'
+            }}
+          />
+        </motion.div>
+      </div>
+    </motion.div>
   )
 }
 

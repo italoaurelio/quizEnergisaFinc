@@ -1,56 +1,18 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { 
-  FaCheck, FaTimes, FaLightbulb, FaClock, FaFire,
-  FaLeaf, FaBolt, FaSun, FaWater, FaHome, FaSnowflake,
-  FaTv, FaPlug, FaRecycle, FaCog, FaGlobe, FaHeart
-} from 'react-icons/fa'
+import { FaCheck, FaTimes, FaLightbulb, FaClock, FaFire, FaStar } from 'react-icons/fa'
 
-function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnswer }) {
+function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnswer, currentScore }) {
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [showResult, setShowResult] = useState(false)
   const [timeLeft, setTimeLeft] = useState(15)
-
-  // Ícones para as alternativas baseados no contexto
-  const getOptionIcon = (index, option) => {
-    // Tamanho responsivo do ícone
-    const getIconSize = () => {
-      if (window.innerWidth <= 480) return 16
-      if (window.innerWidth <= 768) return 20
-      return 24
-    }
-    
-    const iconProps = { size: getIconSize() }
-    
-    // Ícones baseados no conteúdo da opção
-    if (option.toLowerCase().includes('solar')) return <FaSun {...iconProps} />
-    if (option.toLowerCase().includes('eólica') || option.toLowerCase().includes('vento')) return <FaBolt {...iconProps} />
-    if (option.toLowerCase().includes('hidrelétrica') || option.toLowerCase().includes('água')) return <FaWater {...iconProps} />
-    if (option.toLowerCase().includes('biomassa') || option.toLowerCase().includes('orgânica')) return <FaLeaf {...iconProps} />
-    if (option.toLowerCase().includes('geladeira')) return <FaSnowflake {...iconProps} />
-    if (option.toLowerCase().includes('chuveiro') || option.toLowerCase().includes('banho')) return <FaWater {...iconProps} />
-    if (option.toLowerCase().includes('ar condicionado')) return <FaSnowflake {...iconProps} />
-    if (option.toLowerCase().includes('televisão') || option.toLowerCase().includes('tv')) return <FaTv {...iconProps} />
-    if (option.toLowerCase().includes('energia')) return <FaBolt {...iconProps} />
-    if (option.toLowerCase().includes('eficiência')) return <FaCog {...iconProps} />
-    if (option.toLowerCase().includes('sustentável') || option.toLowerCase().includes('ambiente')) return <FaGlobe {...iconProps} />
-    if (option.toLowerCase().includes('desligar')) return <FaPlug {...iconProps} />
-    
-    // Ícones padrão por posição
-    const defaultIcons = [
-      <FaLeaf {...iconProps} />,
-      <FaBolt {...iconProps} />,
-      <FaSun {...iconProps} />,
-      <FaHeart {...iconProps} />
-    ]
-    
-    return defaultIcons[index] || <FaLightbulb {...iconProps} />
-  }
+  const [popupTimer, setPopupTimer] = useState(3)
 
   useEffect(() => {
     setSelectedAnswer(null)
     setShowResult(false)
     setTimeLeft(15)
+    setPopupTimer(3)
   }, [question])
 
   useEffect(() => {
@@ -62,43 +24,40 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
     }
   }, [timeLeft, showResult])
 
+  useEffect(() => {
+    if (showResult && popupTimer > 0) {
+      const timer = setTimeout(() => setPopupTimer(popupTimer - 1), 1000)
+      return () => clearTimeout(timer)
+    } else if (showResult && popupTimer === 0) {
+      // Pequeno delay para completar a animação antes de mudar
+      setTimeout(() => {
+        onAnswer(selectedAnswer)
+      }, 300)
+    }
+  }, [showResult, popupTimer, selectedAnswer, onAnswer])
+
   const handleAnswerSelect = (answerIndex) => {
     if (showResult) return
 
     setSelectedAnswer(answerIndex)
     setShowResult(true)
-    
-    setTimeout(() => {
-      onAnswer(answerIndex)
-    }, 2000)
+    setPopupTimer(3)
   }
 
-  const containerVariants = {
-    initial: { opacity: 0, scale: 0.9 },
-    animate: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 1.1 }
-  }
-
-  const optionVariants = {
-    initial: { opacity: 0, y: 20, scale: 0.9 },
-    animate: { opacity: 1, y: 0, scale: 1 },
-    hover: { scale: 1.02, y: -1 }
-  }
-
-  const getOptionClass = (index) => {
+  const getButtonClass = (index) => {
     if (!showResult) {
-      return selectedAnswer === index ? 'option-button selected' : 'option-button'
+      return selectedAnswer === index ? 'yes-no-button selected' : 'yes-no-button'
     }
     
     if (index === question.correctAnswer) {
-      return 'option-button correct'
+      return 'yes-no-button correct'
     }
     
     if (selectedAnswer === index && index !== question.correctAnswer) {
-      return 'option-button incorrect'
+      return 'yes-no-button incorrect'
     }
     
-    return 'option-button'
+    return 'yes-no-button'
   }
 
   const getTimeColor = () => {
@@ -112,50 +71,54 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
     return <FaFire />
   }
 
+  const isCorrect = selectedAnswer === question.correctAnswer
+
   return (
-    <>
-      <motion.div 
-        className="quiz-card"
-        variants={containerVariants}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        transition={{ duration: 0.5 }}
-      >
-        {/* Header com progresso - Compacto */}
-        <div style={{ marginBottom: '1rem' }}>
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            alignItems: 'center',
-            marginBottom: '0.8rem'
-          }}>
+    <motion.div 
+      className="main-card"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 1.1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="quiz-layout">
+        {/* Lado esquerdo - Pergunta e alternativas */}
+        <div className="quiz-left">
+          {/* Header com progresso */}
+          <div className="quiz-header">
             <motion.span 
+              className="question-counter"
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              style={{ 
-                color: 'white', 
-                fontSize: '0.9rem',
-                fontWeight: '700',
-                background: 'var(--gradient-secondary)',
-                padding: '0.4rem 0.8rem',
-                borderRadius: '15px'
-              }}
             >
               {questionNumber}/{totalQuestions}
             </motion.span>
+            
             <motion.div 
+              className="score-display-quiz"
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              key={currentScore} // Força re-render quando a pontuação muda
+              style={{
+                background: 'var(--gradient-primary)',
+                color: 'white',
+                padding: '0.5rem 1rem',
+                borderRadius: '20px',
+                fontWeight: 'bold',
+                fontSize: '1rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}
+            >
+              <FaStar size={14} />
+              {currentScore || 0} pts
+            </motion.div>
+            
+            <motion.div 
+              className="timer"
               initial={{ x: 20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '0.4rem',
-                background: 'rgba(255, 255, 255, 0.9)',
-                padding: '0.4rem 0.8rem',
-                borderRadius: '15px',
-                border: '1px solid rgba(255, 255, 255, 0.8)'
-              }}
             >
               <motion.div
                 animate={{ 
@@ -172,7 +135,7 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
               </motion.div>
               <span style={{ 
                 color: getTimeColor(),
-                fontSize: '1rem',
+                fontSize: '1.1rem',
                 fontWeight: 'bold'
               }}>
                 {timeLeft}s
@@ -180,6 +143,7 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
             </motion.div>
           </div>
           
+          {/* Barra de progresso */}
           <div className="progress-bar">
             <motion.div 
               className="progress-fill"
@@ -188,190 +152,235 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
               transition={{ duration: 0.8 }}
             />
           </div>
-        </div>
 
-        {/* Pergunta - Tamanho fixo */}
-        <motion.div
-          initial={{ opacity: 0, y: -15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          style={{ 
-            marginBottom: '1rem',
-            width: '100%',
-            minHeight: '80px', // Altura mínima fixa
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          <h2 style={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: '0.6rem',
-            justifyContent: 'center',
-            margin: 0,
-            textAlign: 'center',
-            maxWidth: '100%', // Garante que não ultrapasse o container
-            wordWrap: 'break-word',
-            hyphens: 'auto'
-          }}>
-            <motion.div
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
+          {/* Pergunta */}
+          <div className="question-container">
+            <motion.h2
+              className="question-text"
+              initial={{ opacity: 0, y: -15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
             >
-              <FaLightbulb className="energy-icon" size={20} />
-            </motion.div>
-            <span style={{ lineHeight: '1.2' }}>{question.question}</span>
-          </h2>
-        </motion.div>
+              <motion.div
+                animate={{ rotate: [0, 10, -10, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <FaLightbulb style={{ color: '#00E676' }} size={24} />
+              </motion.div>
+              <span>{question.question}</span>
+            </motion.h2>
+          </div>
 
-        {/* Opções em grade com ícones */}
-        <motion.div
-          className="options-grid"
-          initial="initial"
-          animate="animate"
-          transition={{ staggerChildren: 0.1, delayChildren: 0.3 }}
-        >
-          {question.options.map((option, index) => (
-            <motion.button
-              key={index}
-              variants={optionVariants}
-              whileHover={!showResult ? "hover" : {}}
-              whileTap={!showResult ? { scale: 0.95 } : {}}
-              className={getOptionClass(index)}
-              onClick={() => handleAnswerSelect(index)}
-              disabled={showResult}
-              style={{
-                position: 'relative',
-                overflow: 'hidden'
-              }}
-            >
-              <div style={{ 
-                display: 'flex', 
-                flexDirection: 'column',
-                alignItems: 'center', 
-                justifyContent: 'center',
-                gap: '0.8rem',
-                position: 'relative', 
-                zIndex: 2 
-              }}>
-                <div style={{ 
-                  fontSize: window.innerWidth <= 480 ? '1.8rem' : window.innerWidth <= 768 ? '2.2rem' : '2.5rem', /* Ícone responsivo */
-                  filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))'
-                }}>
-                  {getOptionIcon(index, option)}
-                </div>
-                <div style={{ 
-                  fontSize: window.innerWidth <= 480 ? '0.85rem' : window.innerWidth <= 768 ? '0.95rem' : '1rem', /* Texto responsivo */
-                  fontWeight: '600',
-                  lineHeight: '1.2',
-                  textAlign: 'center',
-                  wordWrap: 'break-word',
-                  hyphens: 'auto',
-                  maxWidth: '100%',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  display: '-webkit-box',
-                  WebkitLineClamp: window.innerWidth <= 480 ? 3 : 4,
-                  WebkitBoxOrient: 'vertical'
-                }}>
-                  {option}
-                </div>
-              </div>
-              
-              {showResult && (
+          {/* Opções Sim/Não */}
+          <motion.div
+            className="yes-no-options"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            {question.options.map((option, index) => (
+              <motion.button
+                key={index}
+                className={getButtonClass(index)}
+                onClick={() => handleAnswerSelect(index)}
+                disabled={showResult}
+                whileHover={!showResult ? { scale: 1.05 } : {}}
+                whileTap={!showResult ? { scale: 0.95 } : {}}
+              >
+                {option}
+              </motion.button>
+            ))}
+          </motion.div>
+
+          {/* Explicação como Popup Overlay */}
+          <AnimatePresence>
+            {showResult && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                style={{
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  background: 'rgba(0, 0, 0, 0.6)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 1000,
+                  padding: '2rem'
+                }}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <motion.div
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{ delay: 0.2, type: "spring" }}
+                  initial={{ opacity: 0, scale: 0.8, y: 50 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.8, y: 50 }}
                   style={{
-                    position: 'absolute',
-                    top: '0.5rem',
-                    right: '0.5rem',
-                    zIndex: 3,
-                    background: 'rgba(255, 255, 255, 0.3)',
-                    borderRadius: '50%',
-                    padding: '0.3rem',
-                    backdropFilter: 'blur(5px)'
+                    background: 'white',
+                    borderRadius: '20px',
+                    padding: '2rem',
+                    maxWidth: '500px',
+                    width: '90%',
+                    maxHeight: '70vh',
+                    overflowY: 'auto',
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+                    border: `3px solid ${isCorrect ? '#4CAF50' : '#F44336'}`
                   }}
                 >
-                  {index === question.correctAnswer ? (
-                    <FaCheck size={12} />
-                  ) : selectedAnswer === index ? (
-                    <FaTimes size={12} />
-                  ) : null}
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '1rem',
+                    fontSize: '1.2rem'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                      {isCorrect ? (
+                        <FaCheck style={{ color: '#4CAF50', fontSize: '1.5rem' }} />
+                      ) : (
+                        <FaTimes style={{ color: '#F44336', fontSize: '1.5rem' }} />
+                      )}
+                      <strong style={{ 
+                        color: isCorrect ? '#4CAF50' : '#F44336',
+                        fontSize: '1.3rem'
+                      }}>
+                        {isCorrect ? '✅ Resposta Correta!' : '❌ Resposta Incorreta!'}
+                      </strong>
+                    </div>
+                    
+                    {/* Timer circular */}
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '50px',
+                      height: '50px',
+                      borderRadius: '50%',
+                      background: `conic-gradient(${isCorrect ? '#4CAF50' : '#F44336'} ${((3 - popupTimer) / 3) * 360}deg, rgba(0,0,0,0.1) 0deg)`,
+                      color: isCorrect ? '#4CAF50' : '#F44336',
+                      fontWeight: 'bold',
+                      fontSize: '1.2rem'
+                    }}>
+                      {popupTimer}
+                    </div>
+                  </div>
+
+                  {/* Pontuação obtida */}
+                  {isCorrect && (
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '0.5rem',
+                      marginBottom: '1rem',
+                      padding: '0.8rem',
+                      background: 'rgba(76, 175, 80, 0.2)',
+                      borderRadius: '12px',
+                      color: '#4CAF50',
+                      fontWeight: 'bold',
+                      fontSize: '1.1rem'
+                    }}>
+                      <FaStar size={16} />
+                      +{question.points || 10} pontos!
+                    </div>
+                  )}
+                  
+                  <p style={{ 
+                    margin: 0, 
+                    fontSize: '1.1rem',
+                    lineHeight: '1.6',
+                    color: 'var(--text-dark)',
+                    marginBottom: '1.5rem'
+                  }}>
+                    {question.explanation}
+                  </p>
+
+                  <div style={{
+                    padding: '1rem',
+                    background: isCorrect ? 'rgba(76, 175, 80, 0.1)' : 'rgba(244, 67, 54, 0.1)',
+                    borderRadius: '12px',
+                    textAlign: 'center',
+                    fontSize: '0.9rem',
+                    color: 'var(--text-light)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.5rem'
+                  }}>
+                    <FaClock size={14} />
+                    Próxima pergunta em {popupTimer}s
+                  </div>
                 </motion.div>
-              )}
-            </motion.button>
-          ))}
-        </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-        {/* Resultado da pergunta - Compacto */}
-        <AnimatePresence>
-          {showResult && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: -15 }}
-              className="info-card"
+          {/* Logos no rodapé */}
+          <motion.div 
+            className="quiz-footer"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '1.5rem',
+              marginTop: 'auto',
+              paddingTop: '1rem',
+              borderTop: '1px solid rgba(0, 230, 118, 0.2)'
+            }}
+          >
+            <img 
+              src="/AneelLogo.png" 
+              alt="ANEEL Logo" 
               style={{
-                textAlign: 'center',
-                background: selectedAnswer === question.correctAnswer 
-                  ? 'rgba(76, 175, 80, 0.2)' 
-                  : selectedAnswer === -1
-                  ? 'rgba(255, 152, 0, 0.2)'
-                  : 'rgba(244, 67, 54, 0.2)',
-                borderColor: selectedAnswer === question.correctAnswer 
-                  ? 'var(--success-green)' 
-                  : selectedAnswer === -1
-                  ? 'var(--accent-orange)'
-                  : 'var(--error-red)',
-                margin: 0,
-                padding: '0.8rem'
+                height: '35px',
+                objectFit: 'contain',
+                opacity: 0.8,
+                filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))'
               }}
-            >
-              {selectedAnswer === -1 ? (
-                <p style={{ 
-                  margin: 0, 
-                  color: 'var(--text-dark)',
-                  fontWeight: '600',
-                  fontSize: '0.9rem'
-                }}>
-                  ⏰ <strong>Tempo esgotado!</strong><br/>
-                  <span style={{color: 'var(--success-green)'}}>{question.options[question.correctAnswer]}</span>
-                </p>
-              ) : selectedAnswer === question.correctAnswer ? (
-                <p style={{ 
-                  margin: 0, 
-                  color: 'var(--text-dark)',
-                  fontWeight: '600',
-                  fontSize: '0.9rem'
-                }}>
-                  🎉 <strong style={{color: 'var(--success-green)'}}>Correto!</strong> +{question.points} pontos
-                </p>
-              ) : (
-                <p style={{ 
-                  margin: 0, 
-                  color: 'var(--text-dark)',
-                  fontWeight: '600',
-                  fontSize: '0.9rem'
-                }}>
-                  💡 <strong>Quase!</strong><br/>
-                  <span style={{color: 'var(--success-green)'}}>{question.options[question.correctAnswer]}</span>
-                </p>
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
+            />
+            <img 
+              src="/EnergisaLogo.png" 
+              alt="Energisa Logo" 
+              style={{
+                height: '35px',
+                objectFit: 'contain',
+                opacity: 0.8,
+                filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))'
+              }}
+            />
+          </motion.div>
+        </div>
 
-      {/* Logo Energisa */}
-      <img 
-        src="/Energisa.png" 
-        alt="Energisa" 
-        className="energisa-logo"
-      />
-    </>
+        {/* Lado direito - Imagem */}
+        <div className="quiz-right">
+          <motion.img 
+            key={question.id} // Força re-render quando muda de pergunta
+            src={question.image || "/EnergisaLogo.png"} 
+            alt={`Imagem da pergunta ${questionNumber}`}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            onError={(e) => {
+              // Fallback para logo da Energisa se a imagem não carregar
+              e.target.src = "/EnergisaLogo.png"
+            }}
+            style={{ 
+              maxWidth: '80%',
+              maxHeight: '80%',
+              objectFit: 'contain',
+              borderRadius: '15px',
+              boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)'
+            }}
+          />
+        </div>
+      </div>
+    </motion.div>
   )
 }
 

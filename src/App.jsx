@@ -23,7 +23,7 @@ function App() {
     const newUserAnswers = [...userAnswers, selectedAnswer]
     setUserAnswers(newUserAnswers)
 
-    // Verificar se a resposta está correta
+    // Calcular pontuação final para o resultado
     const currentQuestion = questionsData[currentQuestionIndex]
     if (selectedAnswer === currentQuestion.correctAnswer) {
       setScore(score + currentQuestion.points)
@@ -31,13 +31,9 @@ function App() {
 
     // Verificar se é a última pergunta
     if (currentQuestionIndex + 1 >= questionsData.length) {
-      setTimeout(() => {
-        setCurrentPage('result')
-      }, 1500) // Delay para mostrar o resultado da última pergunta
+      setCurrentPage('result')
     } else {
-      setTimeout(() => {
-        setCurrentQuestionIndex(currentQuestionIndex + 1)
-      }, 1500) // Delay para mostrar o resultado antes da próxima pergunta
+      setCurrentQuestionIndex(currentQuestionIndex + 1)
     }
   }
 
@@ -48,18 +44,30 @@ function App() {
     setUserAnswers([])
   }
 
+  // Calcular pontuação atual baseada nas respostas já dadas
+  const getCurrentScore = () => {
+    let currentScore = 0
+    for (let i = 0; i < userAnswers.length; i++) {
+      const question = questionsData[i]
+      if (userAnswers[i] === question.correctAnswer) {
+        currentScore += question.points
+      }
+    }
+    return currentScore
+  }
+
   const totalPossibleScore = questionsData.reduce((total, question) => total + question.points, 0)
 
   const pageVariants = {
-    initial: { opacity: 0, scale: 0.8 },
-    in: { opacity: 1, scale: 1 },
-    out: { opacity: 0, scale: 1.2 }
+    initial: { opacity: 0, y: 20 },
+    in: { opacity: 1, y: 0 },
+    out: { opacity: 0, y: -20 }
   }
 
   const pageTransition = {
     type: "tween",
-    ease: "anticipate",
-    duration: 0.5
+    ease: "easeInOut",
+    duration: 0.3
   }
 
   return (
@@ -80,7 +88,7 @@ function App() {
 
         {currentPage === 'quiz' && (
           <motion.div
-            key="quiz"
+            key={`quiz-${currentQuestionIndex}`}
             initial="initial"
             animate="in"
             exit="out"
@@ -93,6 +101,7 @@ function App() {
               totalQuestions={questionsData.length}
               onAnswer={nextQuestion}
               userAnswer={userAnswers[currentQuestionIndex]}
+              currentScore={getCurrentScore()}
             />
           </motion.div>
         )}

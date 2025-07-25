@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { FaLeaf, FaBolt, FaLightbulb, FaPlay, FaAward, FaUsers, FaChartLine } from 'react-icons/fa'
+import { FaLeaf, FaBolt, FaLightbulb, FaPlay } from 'react-icons/fa'
 
 function HomePage({ onStartQuiz, totalQuestions }) {
   const iconVariants = {
@@ -36,21 +36,19 @@ function HomePage({ onStartQuiz, totalQuestions }) {
   }
 
   return (
-    <>
-      <motion.div 
-        className="quiz-card"
-        variants={containerVariants}
-        initial="initial"
-        animate="animate"
-        whileHover={{ y: -2 }}
-      >
+    <motion.div 
+      className="main-card"
+      variants={containerVariants}
+      initial="initial"
+      animate="animate"
+    >
+      <div className="home-layout">
         <motion.div 
-          className="icon-container"
           style={{ 
             display: 'flex', 
             justifyContent: 'center', 
             gap: '1.5rem', 
-            marginBottom: '1.5rem' 
+            marginBottom: '2rem' 
           }}
         >
           <motion.div
@@ -61,7 +59,7 @@ function HomePage({ onStartQuiz, totalQuestions }) {
             transition={{ delay: 0.4 }}
           >
             <motion.div variants={floatingVariants} animate="animate">
-              <FaLeaf className="icon leaf-icon" size={35} />
+              <FaLeaf className="icon leaf-icon" size={40} />
             </motion.div>
           </motion.div>
           <motion.div
@@ -72,7 +70,7 @@ function HomePage({ onStartQuiz, totalQuestions }) {
             transition={{ delay: 0.6 }}
           >
             <motion.div variants={floatingVariants} animate="animate" style={{ animationDelay: '1s' }}>
-              <FaBolt className="icon lightning-icon" size={35} />
+              <FaBolt className="icon lightning-icon" size={40} />
             </motion.div>
           </motion.div>
           <motion.div
@@ -83,114 +81,131 @@ function HomePage({ onStartQuiz, totalQuestions }) {
             transition={{ delay: 0.8 }}
           >
             <motion.div variants={floatingVariants} animate="animate" style={{ animationDelay: '2s' }}>
-              <FaLightbulb className="icon energy-icon" size={35} />
+              <FaLightbulb className="icon energy-icon" size={40} />
             </motion.div>
           </motion.div>
         </motion.div>
 
-        <motion.h1 variants={itemVariants} style={{ marginBottom: '1rem' }}>
+        <motion.h1 
+          variants={itemVariants} 
+          style={{ 
+            fontSize: '3rem', 
+            marginBottom: '1rem',
+            background: 'var(--gradient-primary)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text'
+          }}
+        >
           🌱 EcoQuiz Energisa
         </motion.h1>
 
         <motion.p 
           variants={itemVariants}
           style={{ 
-            textAlign: 'center', 
-            marginBottom: '1.5rem', 
-            color: 'var(--text-dark)',
-            fontSize: '1rem',
-            lineHeight: '1.4',
-            fontWeight: '500'
+            fontSize: '1.2rem',
+            color: 'var(--text-light)',
+            marginBottom: '2rem',
+            maxWidth: '600px',
+            lineHeight: '1.6'
           }}
         >
-          Descubra como suas escolhas podem salvar o planeta! 🌍
+          Teste seus conhecimentos sobre eficiência energética e sustentabilidade! 
+          Descubra como pequenas ações podem fazer uma grande diferença para o meio ambiente.
         </motion.p>
 
-        <motion.div 
+        <motion.div
           variants={itemVariants}
-          className="info-card"
           style={{ 
-            textAlign: 'center',
-            marginBottom: '1.5rem',
-            flex: 1,
-            display: 'flex',
+            display: 'flex', 
+            gap: '1rem', 
             alignItems: 'center',
+            marginBottom: '2rem',
+            flexWrap: 'wrap',
             justifyContent: 'center'
           }}
         >
           <div style={{ 
-            display: 'flex', 
-            justifyContent: 'space-around', 
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '1rem',
-            width: '100%'
+            background: 'var(--gradient-primary)', 
+            color: 'white', 
+            padding: '0.5rem 1rem', 
+            borderRadius: '20px',
+            fontWeight: 'bold'
           }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <FaAward style={{ color: 'var(--accent-orange)', fontSize: '1.3rem', marginBottom: '0.3rem' }} />
-              <span style={{ fontSize: '1.1rem', fontWeight: '700', color: 'var(--text-dark)' }}>
-                {totalQuestions}
-              </span>
-              <span style={{ fontSize: '0.8rem', color: 'var(--text-light)' }}>Perguntas</span>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <FaChartLine style={{ color: 'var(--accent-blue)', fontSize: '1.3rem', marginBottom: '0.3rem' }} />
-              <span style={{ fontSize: '1.1rem', fontWeight: '700', color: 'var(--text-dark)' }}>
-                {totalQuestions * 10}
-              </span>
-              <span style={{ fontSize: '0.8rem', color: 'var(--text-light)' }}>Pontos Max</span>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <FaUsers style={{ color: 'var(--primary-green)', fontSize: '1.3rem', marginBottom: '0.3rem' }} />
-              <span style={{ fontSize: '1.1rem', fontWeight: '700', color: 'var(--text-dark)' }}>
-                15s
-              </span>
-              <span style={{ fontSize: '0.8rem', color: 'var(--text-light)' }}>Por pergunta</span>
-            </div>
+            {totalQuestions} Perguntas
+          </div>
+          <div style={{ 
+            background: 'var(--gradient-secondary)', 
+            color: 'white', 
+            padding: '0.5rem 1rem', 
+            borderRadius: '20px',
+            fontWeight: 'bold'
+          }}>
+            Sim ou Não
+          </div>
+          <div style={{ 
+            background: 'var(--gradient-accent)', 
+            color: 'white', 
+            padding: '0.5rem 1rem', 
+            borderRadius: '20px',
+            fontWeight: 'bold'
+          }}>
+            15s por pergunta
           </div>
         </motion.div>
 
         <motion.button
           variants={itemVariants}
+          className="btn btn-primary"
           onClick={onStartQuiz}
-          whileHover={{ scale: 1.05, y: -2 }}
-          whileTap={{ scale: 0.95 }}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '0.6rem',
-            fontSize: '1.1rem',
-            padding: '1.2rem 2rem',
-            background: 'var(--gradient-primary)',
-            boxShadow: '0 8px 25px rgba(0, 230, 118, 0.4)',
-            marginBottom: '1rem'
+          whileHover={{ 
+            scale: 1.05,
+            boxShadow: "0 10px 25px rgba(0, 230, 118, 0.4)"
           }}
+          whileTap={{ scale: 0.95 }}
+          style={{ fontSize: '1.3rem', padding: '1.2rem 2.5rem', width: '80%'}}
         >
-          <FaPlay size={16} />
-          Começar Agora!
+          <FaPlay size={20} />
+          Começar Quiz
         </motion.button>
 
+        {/* Logos no rodapé */}
         <motion.div 
+          className="home-footer"
           variants={itemVariants}
-          style={{ 
-            textAlign: 'center', 
-            fontSize: '0.85rem',
-            color: 'var(--text-light)',
-            fontWeight: '500'
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '2rem',
+            marginTop: '2rem',
+            paddingTop: '1rem',
+            borderTop: '1px solid rgba(0, 230, 118, 0.2)'
           }}
         >
-          💡 <strong>Dica:</strong> Pense sustentável e economize energia!
+          <img 
+            src="/AneelLogo.png" 
+            alt="ANEEL Logo" 
+            style={{
+              height: '40px',
+              objectFit: 'contain',
+              opacity: 0.8,
+              filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))'
+            }}
+          />
+          <img 
+            src="/EnergisaLogo.png" 
+            alt="Energisa Logo" 
+            style={{
+              height: '40px',
+              objectFit: 'contain',
+              opacity: 0.8,
+              filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))'
+            }}
+          />
         </motion.div>
-      </motion.div>
-
-      {/* Logo Energisa */}
-      <img 
-        src="/Energisa.png" 
-        alt="Energisa" 
-        className="energisa-logo"
-      />
-    </>
+      </div>
+    </motion.div>
   )
 }
 
