@@ -247,7 +247,7 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
                         color: isCorrect ? '#4CAF50' : '#F44336',
                         fontSize: '1.3rem'
                       }}>
-                        {isCorrect ? '✅ Resposta Correta!' : '❌ Resposta Incorreta!'}
+                        {isCorrect ? 'Resposta Correta!' : 'Resposta Incorreta!'}
                       </strong>
                     </div>
                     

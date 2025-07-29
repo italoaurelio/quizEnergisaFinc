@@ -97,7 +97,7 @@ function HomePage({ onStartQuiz, totalQuestions }) {
             backgroundClip: 'text'
           }}
         >
-          🌱 EcoQuiz Energisa
+          🌱 Quiz Energisa
         </motion.h1>
 
         <motion.p 
@@ -111,7 +111,7 @@ function HomePage({ onStartQuiz, totalQuestions }) {
           }}
         >
           Teste seus conhecimentos sobre eficiência energética e sustentabilidade! 
-          Descubra como pequenas ações podem fazer uma grande diferença para o meio ambiente.
+          Descubra como pequenas ações podem fazer uma diferença para o meio ambiente e para o seu dia a dia.
         </motion.p>
 
         <motion.div
