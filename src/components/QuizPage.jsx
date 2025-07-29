@@ -41,7 +41,7 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
 
     setSelectedAnswer(answerIndex)
     setShowResult(true)
-    setPopupTimer(3)
+    setPopupTimer(6)
   }
 
   const getButtonClass = (index) => {
