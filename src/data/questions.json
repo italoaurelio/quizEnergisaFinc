@@ -5,7 +5,7 @@
     "options": ["Sim", "Não"],
     "correctAnswer": 0,
     "points": 10,
-    "image": "../../public/1.jpg",
+    "image": "../../1.jpg",
     "explanation": "Sim! Não coloque sua vida e a de sua família em risco. Mesmo que o equipamento ou interruptor provoque apenas um leve formigamento, busque apoio de um profissional qualificado para avaliar e corrigir o problema com segurança."
   },
   {
@@ -14,7 +14,7 @@
     "options": ["Sim", "Não"],
     "correctAnswer": 1,
     "points": 10,
-    "image": "../../public/2.jpg",
+    "image": "../../2.jpg",
     "explanation": "Não! O uso do benjamim ou ‘T’ não é recomendado, pois pode sobrecarregar os fios e tomadas, principalmente se conectar vários aparelhos ao mesmo tempo, o que pode ocasionar curto-circuito, aquecimento dos condutores e até incêndios."
   },
   {
@@ -23,7 +23,7 @@
     "options": ["Sim", "Não"],
     "correctAnswer": 1,
     "points": 10,
-    "image": "../../public/3.jpg",
+    "image": "../../3.jpg",
     "explanation": "Água e eletricidade não combinam: mantenha os aparelhos elétricos longe de água e ao utilizar qualquer equipamento esteja, preferencialmente, calçado e com as mãos secas, em especial em áreas molhadas."
   },
     {
@@ -32,7 +32,7 @@
     "options": ["Sim", "Não"],
     "correctAnswer": 1,
     "points": 10,
-    "image": "../../public/4.jpg",
+    "image": "../../4.jpg",
     "explanation": "Não! Jamais construa próximo ou embaixo da rede elétrica. Mantenha uma distância de, no mínimo, 2 metros da fiação e tenha cuidado com objetos como vergalhões e canos, mantendo distância inclusive das pontas. Isso evita acidentes graves."
   },
   {
@@ -41,7 +41,7 @@
     "options": ["Sim", "Não"],
     "correctAnswer": 0,
     "points": 10,
-    "image": "../../public/5.png",
+    "image": "../../5.png",
     "explanation": "Sim! Embora a poda de árvores seja responsabilidade da prefeitura, quando os galhos estiverem próximos da rede elétrica, a Energisa deve ser acionada por segurança. Ela possui equipes especializadas para realizar o serviço com segurança."
   },
   {
@@ -50,7 +50,7 @@
     "options": ["Sim", "Não"],
     "correctAnswer": 1,
     "points": 10,
-    "image": "../../public/6.jpeg",
+    "image": "../../6.jpeg",
     "explanation": "Não! Soltar pipas perto da rede elétrica é extremamente perigoso. Procure locais abertos e longe dos fios. Nunca tente retirar uma pipa enroscada e evite usar linhas cortantes, como cerol e linha chilena."
   },
   {
@@ -59,7 +59,7 @@
     "options": ["Sim", "Não"],
     "correctAnswer": 0,
     "points": 10,
-    "image": "../../public/7.jpg",
+    "image": "../../7.jpg",
     "explanation": "Sim! Nunca se aproxime de um fio caído. Alerte outras pessoas para manter distância e ligue imediatamente para a Energisa. Isso ajuda a evitar acidentes graves e garante a segurança de todos."
   },
   {
@@ -68,7 +68,7 @@
     "options": ["Sim", "Não"],
     "correctAnswer": 0,
     "points": 10,
-    "image": "../../public/8.jpg",
+    "image": "../../8.jpg",
     "explanation": "Sim! Lâmpadas LED consomem até 80% menos energia que as incandescentes e duram mais. Apague as luzes ao sair do ambiente para economizar ainda mais energia e contribuir com o meio ambiente."
   },
   {
@@ -77,7 +77,7 @@
     "options": ["Sim", "Não"],
     "correctAnswer": 1,
     "points": 10,
-    "image": "../../public/9.jpg",
+    "image": "../../9.jpg",
     "explanation": "Não! Deixar aparelhos ligados sem uso é desperdício de energia. Sempre desligue a TV e outros eletrônicos quando não estiver usando. Isso ajuda a economizar dinheiro e preservar o meio ambiente."
   },
   {
@@ -86,7 +86,7 @@
     "options": ["Sim", "Não"],
     "correctAnswer": 1,
     "points": 10,
-    "image": "../../public/10.jpeg",
+    "image": "../../10.jpeg",
     "explanation": "Não! Usar o ar-condicionado com portas e janelas abertas aumenta muito o consumo de energia. Para melhorar a eficiência, mantenha tudo fechado, limpe os filtros regularmente e ajuste a temperatura entre 23°C e 25°C."
   },
   {
@@ -95,7 +95,7 @@
     "options": ["Sim", "Não"],
     "correctAnswer": 1,
     "points": 10,
-    "image": "../../public/11.jpg",
+    "image": "../../11.jpg",
     "explanation": "Não! Planeje antes de abrir a geladeira e feche a porta rapidamente. Deixar a porta aberta aumenta o consumo de energia e pode danificar o equipamento."
   },
   {
@@ -104,7 +104,7 @@
     "options": ["Sim", "Não"],
     "correctAnswer": 1,
     "points": 10,
-    "image": "../../public/12.jpg",
+    "image": "../../12.jpg",
     "explanation": "Não! A posição inverno consome mais energia. Use a posição verão sempre que possível, controle o tempo de banho e evite reaproveitar resistências queimadas, pois isso pode ser perigoso."
   },
   {
@@ -113,7 +113,7 @@
     "options": ["Sim", "Não"],
     "correctAnswer": 0,
     "points": 10,
-    "image": "../../public/13.jpg",
+    "image": "../../13.jpg",
     "explanation": "Sim! O Selo Procel identifica os equipamentos mais eficientes no consumo de energia. Escolher produtos com esse selo ajuda a economizar na conta e contribui para a sustentabilidade ambiental."
   },
   {
@@ -122,7 +122,7 @@
     "options": ["Sim", "Não"],
     "correctAnswer": 1,
     "points": 10,
-    "image": "../../public/14.png",
+    "image": "../../14.png",
     "explanation": "Não! A Energisa recebe apenas cerca de 25% do valor da fatura, que é referente à distribuição. O restante vai para geração, transmissão, encargos setoriais e impostos."
   }
 ]
