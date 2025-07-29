@@ -81,11 +81,9 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
       exit={{ opacity: 0, scale: 1.1 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="quiz-layout">
-        {/* Lado esquerdo - Pergunta e alternativas */}
-        <div className="quiz-left">
-          {/* Header com progresso */}
-          <div className="quiz-header">
+      <div className="quiz-container">
+        {/* Header com progresso */}
+        <div className="quiz-header">
             <motion.span 
               className="question-counter"
               initial={{ x: -20, opacity: 0 }}
@@ -355,30 +353,6 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
               }}
             />
           </motion.div>
-        </div>
-
-        {/* Lado direito - Imagem */}
-        <div className="quiz-right">
-          <motion.img 
-            key={question.id} // Força re-render quando muda de pergunta
-            src={question.image || "/EnergisaLogo.png"} 
-            alt={`Imagem da pergunta ${questionNumber}`}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            onError={(e) => {
-              // Fallback para logo da Energisa se a imagem não carregar
-              e.target.src = "/EnergisaLogo.png"
-            }}
-            style={{ 
-              maxWidth: '80%',
-              maxHeight: '80%',
-              objectFit: 'contain',
-              borderRadius: '15px',
-              boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)'
-            }}
-          />
-        </div>
       </div>
     </motion.div>
   )
