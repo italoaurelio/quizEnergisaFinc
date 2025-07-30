@@ -12,7 +12,7 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
     setSelectedAnswer(null)
     setShowResult(false)
     setTimeLeft(15)
-    setPopupTimer(3)
+    setPopupTimer(6)
   }, [question])
 
   useEffect(() => {
@@ -100,16 +100,17 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
               style={{
                 background: 'var(--gradient-primary)',
                 color: 'white',
-                padding: '0.5rem 1rem',
-                borderRadius: '20px',
+                padding: '1rem 1.5rem',
+                borderRadius: '25px',
                 fontWeight: 'bold',
-                fontSize: '1rem',
+                fontSize: '1.4rem',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.5rem'
+                gap: '0.8rem',
+                boxShadow: '0 4px 15px rgba(0, 230, 118, 0.3)'
               }}
             >
-              <FaStar size={14} />
+              <FaStar size={20} />
               {currentScore || 0} pts
             </motion.div>
             
@@ -133,7 +134,7 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
               </motion.div>
               <span style={{ 
                 color: getTimeColor(),
-                fontSize: '1.1rem',
+                fontSize: '1.4rem',
                 fontWeight: 'bold'
               }}>
                 {timeLeft}s
@@ -163,7 +164,7 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
                 animate={{ rotate: [0, 10, -10, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                <FaLightbulb style={{ color: '#00E676' }} size={24} />
+                <FaLightbulb style={{ color: '#00E676' }} size={35} />
               </motion.div>
               <span>{question.question}</span>
             </motion.h2>
@@ -218,34 +219,34 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
                   exit={{ opacity: 0, scale: 0.8, y: 50 }}
                   style={{
                     background: 'white',
-                    borderRadius: '20px',
-                    padding: '2rem',
-                    maxWidth: '500px',
+                    borderRadius: '25px',
+                    padding: '2.5rem',
+                    maxWidth: '700px',
                     width: '90%',
-                    maxHeight: '70vh',
+                    maxHeight: '75vh',
                     overflowY: 'auto',
-                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
-                    border: `3px solid ${isCorrect ? '#4CAF50' : '#F44336'}`
+                    boxShadow: '0 25px 80px rgba(0, 0, 0, 0.4)',
+                    border: `4px solid ${isCorrect ? '#4CAF50' : '#F44336'}`
                   }}
                 >
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    marginBottom: '1rem',
-                    fontSize: '1.2rem'
+                    marginBottom: '1.5rem',
+                    fontSize: '1.4rem'
                   }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                       {isCorrect ? (
-                        <FaCheck style={{ color: '#4CAF50', fontSize: '1.5rem' }} />
+                        <FaCheck style={{ color: '#4CAF50', fontSize: '2rem' }} />
                       ) : (
-                        <FaTimes style={{ color: '#F44336', fontSize: '1.5rem' }} />
+                        <FaTimes style={{ color: '#F44336', fontSize: '2rem' }} />
                       )}
                       <strong style={{ 
                         color: isCorrect ? '#4CAF50' : '#F44336',
-                        fontSize: '1.3rem'
+                        fontSize: '1.6rem'
                       }}>
-                        {isCorrect ? 'Resposta Correta!' : 'Resposta Incorreta!'}
+                        {isCorrect ? '✅ Resposta Correta!' : '❌ Resposta Incorreta!'}
                       </strong>
                     </div>
                     
@@ -254,13 +255,13 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      width: '50px',
-                      height: '50px',
+                      width: '65px',
+                      height: '65px',
                       borderRadius: '50%',
                       background: `conic-gradient(${isCorrect ? '#4CAF50' : '#F44336'} ${((3 - popupTimer) / 3) * 360}deg, rgba(0,0,0,0.1) 0deg)`,
                       color: isCorrect ? '#4CAF50' : '#F44336',
                       fontWeight: 'bold',
-                      fontSize: '1.2rem'
+                      fontSize: '1.5rem'
                     }}>
                       {popupTimer}
                     </div>
@@ -272,43 +273,43 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: '0.5rem',
-                      marginBottom: '1rem',
-                      padding: '0.8rem',
+                      gap: '0.8rem',
+                      marginBottom: '1.5rem',
+                      padding: '1.2rem',
                       background: 'rgba(76, 175, 80, 0.2)',
-                      borderRadius: '12px',
+                      borderRadius: '15px',
                       color: '#4CAF50',
                       fontWeight: 'bold',
-                      fontSize: '1.1rem'
+                      fontSize: '1.3rem'
                     }}>
-                      <FaStar size={16} />
+                      <FaStar size={20} />
                       +{question.points || 10} pontos!
                     </div>
                   )}
                   
                   <p style={{ 
                     margin: 0, 
-                    fontSize: '1.1rem',
+                    fontSize: '1.3rem',
                     lineHeight: '1.6',
                     color: 'var(--text-dark)',
-                    marginBottom: '1.5rem'
+                    marginBottom: '2rem'
                   }}>
                     {question.explanation}
                   </p>
 
                   <div style={{
-                    padding: '1rem',
+                    padding: '1.3rem',
                     background: isCorrect ? 'rgba(76, 175, 80, 0.1)' : 'rgba(244, 67, 54, 0.1)',
-                    borderRadius: '12px',
+                    borderRadius: '15px',
                     textAlign: 'center',
-                    fontSize: '0.9rem',
+                    fontSize: '1.1rem',
                     color: 'var(--text-light)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '0.5rem'
+                    gap: '0.8rem'
                   }}>
-                    <FaClock size={14} />
+                    <FaClock size={18} />
                     Próxima pergunta em {popupTimer}s
                   </div>
                 </motion.div>
@@ -326,30 +327,31 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              gap: '1.5rem',
-              marginTop: 'auto',
-              paddingTop: '1rem',
-              borderTop: '1px solid rgba(0, 230, 118, 0.2)'
+              gap: '2rem',
+              paddingTop: '1.5rem',
+              borderTop: '1px solid rgba(0, 230, 118, 0.2)',
+              width: '100%',
+              maxWidth: '500px'
             }}
           >
             <img 
               src="/AneelLogo.png" 
               alt="ANEEL Logo" 
               style={{
-                height: '35px',
+                height: '65px',
                 objectFit: 'contain',
                 opacity: 0.8,
-                filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))'
+                filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15))'
               }}
             />
             <img 
               src="/EnergisaLogo.png" 
               alt="Energisa Logo" 
               style={{
-                height: '35px',
+                height: '65px',
                 objectFit: 'contain',
                 opacity: 0.8,
-                filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))'
+                filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15))'
               }}
             />
           </motion.div>

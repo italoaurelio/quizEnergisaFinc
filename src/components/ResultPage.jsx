@@ -89,8 +89,8 @@ function ResultPage({ score, totalScore, totalQuestions, onRestart }) {
                 variants={itemVariants}
                 className="performance-title"
                 style={{
-                  fontSize: '1.6rem',
-                  marginBottom: '0.8rem',
+                  fontSize: '2.2rem',
+                  marginBottom: '1.2rem',
                   background: performance.gradient,
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
@@ -105,9 +105,9 @@ function ResultPage({ score, totalScore, totalQuestions, onRestart }) {
                 variants={itemVariants}
                 className="score-display"
                 style={{
-                  fontSize: '2.8rem',
+                  fontSize: '3.8rem',
                   fontWeight: 'bold',
-                  marginBottom: '0.8rem',
+                  marginBottom: '1.2rem',
                   background: performance.gradient,
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
@@ -122,11 +122,11 @@ function ResultPage({ score, totalScore, totalQuestions, onRestart }) {
                 variants={itemVariants}
                 className="performance-message"
                 style={{
-                  fontSize: '1rem',
+                  fontSize: '1.4rem',
                   color: 'var(--text-dark)',
                   textAlign: 'center',
                   lineHeight: '1.5',
-                  marginBottom: '1rem'
+                  marginBottom: '1.5rem'
                 }}
               >
                 {performance.message}
@@ -136,13 +136,13 @@ function ResultPage({ score, totalScore, totalQuestions, onRestart }) {
                 className="encouragement"
                 variants={itemVariants}
                 style={{
-                  fontSize: '0.9rem',
+                  fontSize: '1.2rem',
                   color: 'var(--text-light)',
                   textAlign: 'center',
-                  padding: '0.8rem',
+                  padding: '1.2rem',
                   background: 'rgba(0, 230, 118, 0.1)',
-                  borderRadius: '12px',
-                  border: '1px solid rgba(0, 230, 118, 0.2)',
+                  borderRadius: '16px',
+                  border: '2px solid rgba(0, 230, 118, 0.2)',
                   maxWidth: '280px',
                   margin: '0 auto'
                 }}
@@ -200,7 +200,7 @@ function ResultPage({ score, totalScore, totalQuestions, onRestart }) {
                   }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <FaRedo size={18} />
+                  <FaRedo size={22} />
                   Jogar Novamente
                 </motion.button>
               </motion.div>

@@ -103,7 +103,7 @@ function HomePage({ onStartQuiz, totalQuestions }) {
         <motion.p 
           variants={itemVariants}
           style={{ 
-            fontSize: '1.2rem',
+            fontSize: '1.5rem',
             color: 'var(--text-light)',
             marginBottom: '2rem',
             maxWidth: '600px',
