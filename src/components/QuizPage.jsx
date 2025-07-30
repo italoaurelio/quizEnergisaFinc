@@ -11,8 +11,8 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
   useEffect(() => {
     setSelectedAnswer(null)
     setShowResult(false)
-    setTimeLeft(15)
-    setPopupTimer(6)
+    setTimeLeft(10)
+    setPopupTimer(10)
   }, [question])
 
   useEffect(() => {
@@ -41,7 +41,7 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
 
     setSelectedAnswer(answerIndex)
     setShowResult(true)
-    setPopupTimer(6)
+    setPopupTimer(10)
   }
 
   const getButtonClass = (index) => {
@@ -246,7 +246,7 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
                         color: isCorrect ? '#4CAF50' : '#F44336',
                         fontSize: '1.6rem'
                       }}>
-                        {isCorrect ? '✅ Resposta Correta!' : '❌ Resposta Incorreta!'}
+                        {isCorrect ? 'Resposta Correta!' : 'sResposta Incorreta!'}
                       </strong>
                     </div>
                     
