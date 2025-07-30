@@ -111,7 +111,7 @@ function HomePage({ onStartQuiz, totalQuestions }) {
           }}
         >
           Teste seus conhecimentos sobre eficiência energética e sustentabilidade! 
-          Descubra como pequenas ações podem fazer uma diferença para o meio ambiente e para o seu dia a dia.
+          Descubra como pequsenas ações podem fazer a diferença para o meio ambiente e para o seu dia a dia.
         </motion.p>
 
         <motion.div
