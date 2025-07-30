@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
-import { FaLeaf, FaBolt, FaLightbulb, FaPlay } from 'react-icons/fa'
+import { FaLeaf, FaBolt, FaLightbulb, FaPlay, FaUsers } from 'react-icons/fa'
 
-function HomePage({ onStartQuiz, totalQuestions }) {
+function HomePage({ onStartQuiz, totalQuestions, totalPlayers }) {
   const iconVariants = {
     initial: { scale: 0, rotate: -180 },
     animate: { scale: 1, rotate: 0 },
@@ -41,7 +41,32 @@ function HomePage({ onStartQuiz, totalQuestions }) {
       variants={containerVariants}
       initial="initial"
       animate="animate"
+      style={{ position: 'relative' }}
     >
+      {/* Contador de jogadores no canto superior direito */}
+      <motion.div
+        variants={itemVariants}
+        style={{
+          position: 'absolute',
+          top: '1rem',
+          right: '1rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          background: 'rgba(0, 230, 118, 0.1)',
+          padding: '0.5rem 1rem',
+          borderRadius: '20px',
+          border: '1px solid rgba(0, 230, 118, 0.3)',
+          color: 'var(--primary-green)',
+          fontSize: '1rem',
+          fontWeight: 'bold',
+          zIndex: 10
+        }}
+      >
+        <FaUsers size={16} />
+        {totalPlayers.toLocaleString()}
+      </motion.div>
+
       <div className="home-layout">
         <motion.div 
           style={{ 

@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import HomePage from './components/HomePage'
 import QuizPage from './components/QuizPage'
 import ResultPage from './components/ResultPage'
 import questionsData from './data/questions.json'
+import { PlayerStatsService } from './utils/playerStats'
 import './App.css'
 
 function App() {
@@ -11,6 +12,13 @@ function App() {
   const [score, setScore] = useState(0)
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [userAnswers, setUserAnswers] = useState([])
+  const [playerStats, setPlayerStats] = useState({ totalPlayers: 0 })
+
+  // Carregar estatísticas dos jogadores ao inicializar
+  useEffect(() => {
+    const stats = PlayerStatsService.getStats()
+    setPlayerStats(stats)
+  }, [])
 
   const startQuiz = () => {
     setCurrentPage('quiz')
@@ -31,6 +39,9 @@ function App() {
 
     // Verificar se é a última pergunta
     if (currentQuestionIndex + 1 >= questionsData.length) {
+      // Incrementar contador de jogadores quando o quiz é concluído
+      const newStats = PlayerStatsService.incrementPlayerCount()
+      setPlayerStats(newStats)
       setCurrentPage('result')
     } else {
       setCurrentQuestionIndex(currentQuestionIndex + 1)
@@ -82,7 +93,11 @@ function App() {
             variants={pageVariants}
             transition={pageTransition}
           >
-            <HomePage onStartQuiz={startQuiz} totalQuestions={questionsData.length} />
+            <HomePage 
+              onStartQuiz={startQuiz} 
+              totalQuestions={questionsData.length}
+              totalPlayers={playerStats.totalPlayers}
+            />
           </motion.div>
         )}
 
@@ -119,6 +134,7 @@ function App() {
               score={score}
               totalScore={totalPossibleScore}
               totalQuestions={questionsData.length}
+              totalPlayers={playerStats.totalPlayers}
               onRestart={restartQuiz}
             />
           </motion.div>

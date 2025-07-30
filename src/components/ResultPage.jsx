@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { FaTrophy, FaMedal, FaRedo, FaLeaf, FaStar } from 'react-icons/fa'
 
-function ResultPage({ score, totalScore, totalQuestions, onRestart }) {
+function ResultPage({ score, totalScore, totalQuestions, totalPlayers, onRestart }) {
   const percentage = Math.round((score / totalScore) * 100)
   
   const getPerformanceLevel = () => {
@@ -183,10 +183,10 @@ function ResultPage({ score, totalScore, totalQuestions, onRestart }) {
                 </div>
 
                 <div className="stat-card">
-                  <div className="stat-value" style={{ color: 'var(--secondary-green)' }}>
-                    {Math.round((score / totalQuestions) * 10) / 10}
+                  <div className="stat-value" style={{ color: 'var(--primary-green)' }}>
+                    {totalPlayers.toLocaleString()}
                   </div>
-                  <div className="stat-label">Média por Pergunta</div>
+                  <div className="stat-label">👥 Pessoas que já Jogaram</div>
                 </div>
               </motion.div>
 
