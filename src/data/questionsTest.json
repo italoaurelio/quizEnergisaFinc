@@ -1,0 +1,11 @@
+[
+  {
+    "id": 14,
+    "question": "A Energisa fica com todo o valor que o cliente paga na fatura?",
+    "options": ["Sim", "Não"],
+    "correctAnswer": 1,
+    "points": 10,
+    "image": "../../14.png",
+    "explanation": "Não! A Energisa recebe apenas cerca de 25% do valor da fatura, que é referente à distribuição. O restante vai para geração, transmissão, encargos setoriais e impostos."
+  }
+]
