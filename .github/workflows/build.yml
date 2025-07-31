@@ -11,7 +11,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest]
     
     runs-on: ${{ matrix.os }}
     
@@ -33,15 +33,11 @@ jobs:
       
     - name: Build Electron para Linux
       if: matrix.os == 'ubuntu-latest'
-      run: npx electron-builder --config electron-builder.json --linux AppImage
+      run: npm run dist:linux
       
     - name: Build Electron para Windows
       if: matrix.os == 'windows-latest'
-      run: npx electron-builder --config electron-builder.json --win
-      
-    - name: Build Electron para macOS
-      if: matrix.os == 'macos-latest'
-      run: npx electron-builder --config electron-builder.json --mac
+      run: npm run dist:win
       
     - name: Upload artefatos Linux
       if: matrix.os == 'ubuntu-latest'
@@ -55,13 +51,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: quiz-energisa-windows
-        path: |
-          release/*.exe
-          release/*.msi
-          
-    - name: Upload artefatos macOS
-      if: matrix.os == 'macos-latest'
-      uses: actions/upload-artifact@v4
-      with:
-        name: quiz-energisa-macos
-        path: release/*.dmg
+        path: release/*.exe

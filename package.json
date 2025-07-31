@@ -18,8 +18,7 @@
     "dist": "npm run build && electron-builder --config electron-builder.json --publish=never",
     "dist:linux": "npm run build && electron-builder --config electron-builder.json --linux",
     "dist:win": "npm run build && electron-builder --config electron-builder.json --win",
-    "dist:mac": "npm run build && electron-builder --config electron-builder.json --mac",
-    "dist:all": "npm run build && electron-builder --config electron-builder.json --linux --win --mac"
+    "build:clean": "rm -rf dist release && npm run build"
   },
   "dependencies": {
     "framer-motion": "^12.23.6",

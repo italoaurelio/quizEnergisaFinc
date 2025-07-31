@@ -1,26 +1,41 @@
 #!/bin/bash
 
-echo "🚀 Gerando executáveis para múltiplas plataformas..."
+echo "🚀 Gerando executáveis para Linux e Windows..."
 echo ""
+
+# Verificar se npm está disponível
+if ! command -v npm &> /dev/null; then
+    echo "❌ npm não encontrado. Instale Node.js primeiro."
+    exit 1
+fi
+
+# Build do React
+echo "🔧 Fazendo build do React..."
+npm run build
+if [ $? -ne 0 ]; then
+    echo "❌ Erro no build do React"
+    exit 1
+fi
 
 # Linux (AppImage)
 echo "📱 Gerando AppImage para Linux..."
-npx electron-builder --config electron-builder.json --linux AppImage
-echo "✅ AppImage gerado!"
-echo ""
-
-# Tentar Windows se possível
-echo "🪟 Tentando gerar executável para Windows..."
-if npx electron-builder --config electron-builder.json --win portable --x64 2>/dev/null; then
-    echo "✅ Executável Windows gerado!"
+npm run dist:linux
+if [ $? -eq 0 ]; then
+    echo "✅ AppImage gerado!"
 else
-    echo "⚠️  Compilação para Windows requer ambiente Windows ou Wine configurado"
-    echo "💡 Alternativas:"
-    echo "   1. Use GitHub Actions para compilação automática"
-    echo "   2. Execute em uma máquina Windows"
-    echo "   3. Use um serviço de CI/CD"
+    echo "❌ Erro ao gerar AppImage"
 fi
 
 echo ""
+echo "🪟 Para Windows:"
+echo "   - Execute 'build-windows.bat' no Windows"
+echo "   - Ou use GitHub Actions para build automático"
+echo "   - Ou execute: npm run dist:win (no Windows)"
+
+echo ""
 echo "📁 Arquivos gerados em: ./release/"
-ls -la release/ 2>/dev/null || echo "Nenhum arquivo encontrado"
+if [ -d "release" ]; then
+    ls -la release/
+else
+    echo "Nenhum arquivo encontrado"
+fi
