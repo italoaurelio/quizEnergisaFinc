@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
 import { FaTrophy, FaMedal, FaRedo, FaLeaf, FaStar } from 'react-icons/fa'
+import AneelLogo from '../assets/AneelLogo.png'
+import EnergisaLogo from '../assets/EnergisaLogo.png'
 
 function ResultPage({ score, totalScore, totalQuestions, totalPlayers, onRestart }) {
   const percentage = Math.round((score / totalScore) * 100)
@@ -224,7 +226,7 @@ function ResultPage({ score, totalScore, totalQuestions, totalPlayers, onRestart
           }}
         >
           <img 
-            src="/AneelLogo.png" 
+            src={AneelLogo} 
             alt="ANEEL Logo" 
             style={{
               height: '35px',
@@ -234,7 +236,7 @@ function ResultPage({ score, totalScore, totalQuestions, totalPlayers, onRestart
             }}
           />
           <img 
-            src="/EnergisaLogo.png" 
+            src={EnergisaLogo} 
             alt="Energisa Logo" 
             style={{
               height: '35px',

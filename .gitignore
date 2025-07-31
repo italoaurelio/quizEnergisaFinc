@@ -12,6 +12,20 @@ dist
 dist-ssr
 *.local
 
+# Electron Builder configuration
+# Arquivos de distribuição do aplicativo
+release/
+*.dmg
+*.AppImage
+*.deb
+*.rpm
+*.exe
+*.msi
+
+# Arquivos temporários do Electron
+.tmp/
+temp/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

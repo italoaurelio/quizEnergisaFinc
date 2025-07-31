@@ -1,0 +1,47 @@
+{
+  "appId": "com.energisa.quiz-finc",
+  "productName": "Quiz Energisa FINC",
+  "directories": {
+    "output": "release"
+  },
+  "files": [
+    "electron.js",
+    "package.json",
+    "dist/**/*"
+  ],
+  "linux": {
+    "target": "AppImage",
+    "category": "Education"
+  },
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64"]
+      },
+      {
+        "target": "portable",
+        "arch": ["x64"]
+      }
+    ],
+    "icon": "src/assets/EnergisaLogo.png",
+    "publisherName": "Energisa"
+  },
+  "mac": {
+    "target": [
+      {
+        "target": "dmg",
+        "arch": ["x64", "arm64"]
+      }
+    ],
+    "icon": "src/assets/EnergisaLogo.png",
+    "category": "public.app-category.education"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "Quiz Energisa FINC"
+  }
+}

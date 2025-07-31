@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaCheck, FaTimes, FaLightbulb, FaClock, FaFire, FaStar } from 'react-icons/fa'
+import AneelLogo from '../assets/AneelLogo.png'
+import EnergisaLogo from '../assets/EnergisaLogo.png'
 
 function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnswer, currentScore }) {
   const [selectedAnswer, setSelectedAnswer] = useState(null)
@@ -335,7 +337,7 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
             }}
           >
             <img 
-              src="/AneelLogo.png" 
+              src={AneelLogo} 
               alt="ANEEL Logo" 
               style={{
                 height: '65px',
@@ -345,7 +347,7 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
               }}
             />
             <img 
-              src="/EnergisaLogo.png" 
+              src={EnergisaLogo} 
               alt="Energisa Logo" 
               style={{
                 height: '65px',

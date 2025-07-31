@@ -1,0 +1,67 @@
+name: Build Electron App
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+  workflow_dispatch: # Permite execução manual
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Instalar dependências
+      run: npm ci
+      
+    - name: Build da aplicação React
+      run: npm run build
+      
+    - name: Build Electron para Linux
+      if: matrix.os == 'ubuntu-latest'
+      run: npx electron-builder --config electron-builder.json --linux AppImage
+      
+    - name: Build Electron para Windows
+      if: matrix.os == 'windows-latest'
+      run: npx electron-builder --config electron-builder.json --win
+      
+    - name: Build Electron para macOS
+      if: matrix.os == 'macos-latest'
+      run: npx electron-builder --config electron-builder.json --mac
+      
+    - name: Upload artefatos Linux
+      if: matrix.os == 'ubuntu-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: quiz-energisa-linux
+        path: release/*.AppImage
+        
+    - name: Upload artefatos Windows
+      if: matrix.os == 'windows-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: quiz-energisa-windows
+        path: |
+          release/*.exe
+          release/*.msi
+          
+    - name: Upload artefatos macOS
+      if: matrix.os == 'macos-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: quiz-energisa-macos
+        path: release/*.dmg

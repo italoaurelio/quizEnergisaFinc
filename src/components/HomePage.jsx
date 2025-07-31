@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
 import { FaLeaf, FaBolt, FaLightbulb, FaPlay, FaUsers } from 'react-icons/fa'
+import AneelLogo from '../assets/AneelLogo.png'
+import EnergisaLogo from '../assets/EnergisaLogo.png'
 
 function HomePage({ onStartQuiz, totalQuestions, totalPlayers }) {
   const iconVariants = {
@@ -209,7 +211,7 @@ function HomePage({ onStartQuiz, totalQuestions, totalPlayers }) {
           }}
         >
           <img 
-            src="/AneelLogo.png" 
+            src={AneelLogo} 
             alt="ANEEL Logo" 
             style={{
               height: '40px',
@@ -219,7 +221,7 @@ function HomePage({ onStartQuiz, totalQuestions, totalPlayers }) {
             }}
           />
           <img 
-            src="/EnergisaLogo.png" 
+            src={EnergisaLogo} 
             alt="Energisa Logo" 
             style={{
               height: '40px',
