@@ -46,6 +46,10 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
     setPopupTimer(10)
   }
 
+  const handleNextQuestion = () => {
+    onAnswer(selectedAnswer)
+  }
+
   const getButtonClass = (index) => {
     if (!showResult) {
       return selectedAnswer === index ? 'yes-no-button selected' : 'yes-no-button'
@@ -260,7 +264,7 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
                       width: '65px',
                       height: '65px',
                       borderRadius: '50%',
-                      background: `conic-gradient(${isCorrect ? '#4CAF50' : '#F44336'} ${((3 - popupTimer) / 3) * 360}deg, rgba(0,0,0,0.1) 0deg)`,
+                      background: `conic-gradient(${isCorrect ? '#4CAF50' : '#F44336'} ${((10 - popupTimer) / 10) * 360}deg, rgba(0,0,0,0.1) 0deg)`,
                       color: isCorrect ? '#4CAF50' : '#F44336',
                       fontWeight: 'bold',
                       fontSize: '1.5rem'
@@ -300,19 +304,35 @@ function QuizPage({ question, questionNumber, totalQuestions, onAnswer, userAnsw
                   </p>
 
                   <div style={{
-                    padding: '1.3rem',
-                    background: isCorrect ? 'rgba(76, 175, 80, 0.1)' : 'rgba(244, 67, 54, 0.1)',
-                    borderRadius: '15px',
-                    textAlign: 'center',
-                    fontSize: '1.1rem',
-                    color: 'var(--text-light)',
                     display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '0.8rem'
+                    flexDirection: 'column',
+                    gap: '1rem',
+                    alignItems: 'center'
                   }}>
-                    <FaClock size={18} />
-                    Próxima pergunta em {popupTimer}s
+                    {/* Botão Próxima Pergunta */}
+                    <motion.button
+                      onClick={handleNextQuestion}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      style={{
+                        padding: '1rem 2rem',
+                        background: 'linear-gradient(135deg, #4CAF50 0%, #45A049 100%)',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '15px',
+                        fontSize: '1.1rem',
+                        fontWeight: 'bold',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 15px rgba(76, 175, 80, 0.3)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem'
+                      }}
+                    >
+                      Próxima Pergunta
+                      <FaCheck size={16} />
+                    </motion.button>
+
                   </div>
                 </motion.div>
               </motion.div>
